@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 
 void inputCorrectness(int[], char[3][3], int);
+bool isWin(char[3][3], int);
 
 int main()
 {
@@ -32,4 +33,49 @@ void inputCorrectness(int coordinates[], char map[3][3], int turn) {
             }
         }
     }
+}
+
+bool isWin(char map[3][3], int turn) {
+    int index = 0;
+    char buf = 'X';
+
+    /*if ((map[0][0] == map[1][1] == map[2][2]) || (map[0][2] == map[1][1] == map[2][0])) {
+        return true;
+    }*/
+
+    if ((map[0][0] == map[1][1] && map[1][1] == map[2][2] && map[0][0] != '#') || (map[0][2] == map[1][1] && map[1][1] == map[2][0] && map[0][2] != '#')) {
+        //return true;
+        goto end_game;
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        if (map[i][0] != '#') {
+            buf = map[0][0];
+        }
+        for (int k = 0; k < 3; ++k) {
+            if (map[i][k] == buf) {
+                ++index;
+            }
+            else if (map[i][k] != '#') {
+                buf = map[i][k];
+            }
+            else if (map[k][i] == buf) {
+                ++index;
+            }
+        }
+        if (index == 3) {
+            goto end_game;
+            //return true;
+        }
+        index = 0;
+    }
+
+    if (false) {
+    end_game:
+        std::cout << "\nCongratulations!!!!! \nPlayer " << (turn % 2) + 1 << " win!\n";
+        return true;
+    }
+
+
+    return false;
 }
