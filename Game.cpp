@@ -1,20 +1,35 @@
-﻿// Game.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
 
-#include <iostream>
+void inputCorrectness(int[], char[3][3], int);
 
 int main()
 {
     std::cout << "Hello World!\n";
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+void inputCorrectness(int coordinates[], char map[3][3], int turn) {
+    bool flag = true;
+    while (flag) {
+        std::cout << "Input correct coordinates: ";
+        std::cin >> coordinates[0] >> coordinates[1];
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        if ((coordinates[0] < 3) && (coordinates[1] < 3)) {
+            if ((coordinates[0] >= 0) && coordinates[1] >= 0) {
+                if (map[coordinates[0]][coordinates[1]] == '#') {
+                    char character;
+                    if (turn % 2 == 0) {
+                        character = 'X';
+                    }
+                    else {
+                        character = 'o';
+                    }
+                    map[coordinates[0]][coordinates[1]] = character;
+                    flag = false;
+                }
+            }
+        }
+    }
+}
