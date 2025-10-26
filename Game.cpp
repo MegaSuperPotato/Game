@@ -5,7 +5,46 @@ bool isWin(char[3][3], int);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+play_again:
+    char choise = ' ';
+
+    int coordinates[2] = { -1 };
+    char map[3][3];
+
+    for (int j = 0; j < 3; ++j) {
+        for (int k = 0; k < 3; ++k) {
+            map[j][k] = '#';
+        }
+    }
+
+    for (int i = 0; i < 9; ++i) {
+        inputCorrectness(coordinates, map, i);
+        if (isWin(map, i)) {
+            goto my_choise;
+            //return 3;
+        }
+        for (int j = 0; j < 3; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                std::cout << map[j][k] << "|";
+                if (k == 2) {
+                    std::cout << "\n";
+                }
+            }
+        }
+        std::cout << "\n";
+    }
+    std::cout << "Draw!!!\n";
+my_choise:
+    std::cout << "Do you want to play again?(y/n): ";
+    std::cin >> choise; choise = tolower(choise);
+    if (choise != 'y' && choise != 'n') {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        goto my_choise;
+    }
+    else if (choise == 'y') {
+        goto play_again;
+    }
 }
 
 void inputCorrectness(int coordinates[], char map[3][3], int turn) {
